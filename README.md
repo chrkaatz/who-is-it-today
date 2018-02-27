@@ -13,3 +13,4 @@ For a live demo head over to [https://chrkaatz.github.io/who-is-it-today](https:
 ## Current limitations
 
 * Not agnostic to business week days
+* no way to display a back-up person yet

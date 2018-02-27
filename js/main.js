@@ -10,8 +10,53 @@
   const addUserBox = $('#addUserBox');
   const userList = $('ul#userlist');
   const userField = $('p#user');
+  const exportLink = $('a#export');
   $('span#what').text(localStorage.getItem('what') || 'Champion');
   let currentUserIndex = new Date().getDate() % users.length;
+
+  function getExportDataString() {
+    return 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify({
+      what: localStorage.getItem('what') || 'Champion',
+      users
+    }));
+  }
+
+  function setWhat(what) {
+    localStorage.setItem('what', what);
+    $('span#what').text(what);
+  }
+
+  function handleFileSelect() {
+    input = document.getElementById('fileinput');
+    if (!input) {
+      alert("Um, couldn't find the fileinput element.");
+    }
+    else if (!input.files) {
+      alert("This browser doesn't seem to support the `files` property of file inputs.");
+    }
+    else if (!input.files[0]) {
+      alert("Please select a file before clicking 'Load'");
+    }
+    else {
+      file = input.files[0];
+      fr = new FileReader();
+      fr.onload = function() {
+        try {
+          const imported = JSON.parse(fr.result);
+          if (imported.hasOwnProperty('what') && imported.hasOwnProperty('users') && imported.users.length > 0) {
+            setWhat(imported.what);
+            users = imported.users;
+            localStorage.setItem('users', JSON.stringify(users));
+            updateUsersList();
+          }
+        } catch(err) {
+          console.error(err);
+        }
+      }
+      fr.readAsText(file);
+    }
+  }
+  window.handleFileSelect = handleFileSelect;
 
   userField.text(users[currentUserIndex]);
   setInterval(() => {
@@ -19,16 +64,20 @@
     userField.text(users[currentUserIndex]);
   }, INTERVAL)
 
-  updateDeputyList();
+  updateUsersList();
 
   function addUser(username) {
     users.push(username);
     localStorage.setItem('users', JSON.stringify(users));
-    updateDeputyList();
+    updateUsersList();
   }
 
-  function updateDeputyList() {
-    $(userList).html(users.map(user => `<li>${user} <a id="removeUser" href="#delete" data-user="${user}"><i class="material-icons">clear</i></a></li>`));
+  function updateUsersList() {
+    currentUserIndex = new Date().getDate() % users.length;
+    $(exportLink).attr('href', getExportDataString());
+    $(exportLink).attr('download', `export_who-is-it-today.json`);
+    $(userList).html(users.map(user => `<li>${user} <a id='removeUser' href='#delete' data-user='${user}'><i class='material-icons'>clear</i></a></li>`));
+    userField.text(users[currentUserIndex]);
     updateClickListeners();
   }
 
@@ -37,7 +86,7 @@
       return user !== username;
     });
     localStorage.setItem('users', JSON.stringify(users));
-    updateDeputyList();
+    updateUsersList();
   }
 
   $('a#manage-deputies').click((event) => {
@@ -48,7 +97,7 @@
     }
   });
 
-  $('a#addDeputy').click((event) => {
+  $('a#addUser').click((event) => {
     if ($(addUserBox).css('display') === 'none') {
         $(addUserBox).show();
     } else {
@@ -57,12 +106,12 @@
     $('button#AddUserBtn').click((event) => {
       if ($('input#name').value !== '') {
         addUser($('input#name')[0].value);
-        $('input#name')[0].value = "";
+        $('input#name')[0].value = '';
       }
     });
-    $('button#CancelDebutyBtn').click((event) => {
+    $('#addUserBox button.cancel').click((event) => {
         $(addUserBox).hide();
-        $('input#name')[0].value = "";
+        $('input#name')[0].value = '';
     });
   });
 
@@ -95,7 +144,7 @@
   function updateSubject() {
     const subject = $('span#what').html();
     if(subject != '') {
-      localStorage.setItem('what', subject);
+      setWhat(subject);
     }
   }
 

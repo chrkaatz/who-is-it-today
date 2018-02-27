@@ -41,11 +41,20 @@
                         <label class="mdl-textfield__label" for="name">Name</label>
                     </div>
                     <button id="AddUserBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary">Add</button>
-                    <button id="CancelDebutyBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Cancel</button>
+                    <button class="cancel mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Cancel</button>
                 </div>
             </div>
             <div class="mdl-card__actions mdl-card--border">
-                <a id="addDeputy" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                <input type="file" id="fileinput" />
+                <a id="import" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick='handleFileSelect();'>
+                    <i class="material-icons">file_upload</i> Import
+                </a>
+                <a id="export"class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">file_download</i> Export
+                </a>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <a id="addUser" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                     Add Somebody
                 </a>
             </div>

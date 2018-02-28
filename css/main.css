@@ -118,6 +118,10 @@ ul#userlist li a {
     display: none;
 }
 
+div.mdl-card__actions iframe {
+    float: right;
+}
+
 
 /*
  * A better looking default horizontal rule

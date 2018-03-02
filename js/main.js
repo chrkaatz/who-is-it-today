@@ -2,28 +2,57 @@
   const INTERVAL = 60 * 60 * 1000;
   const doneTypingInterval = 2000;
   let typingTimer;
-  let users = [];
+  let application = {
+    what: localStorage.getItem('what') || 'Champion',
+    users: [],
+    url: location.href,
+    colors: {
+      primary: localStorage.getItem('primaryColor') || '#f39c12',
+      secondary: localStorage.getItem('secondaryColor') || '#9b59b6'
+    }
+  };
   try {
-    users = JSON.parse(localStorage.getItem('users')) || [];
+    application.users = JSON.parse(localStorage.getItem('users')) || [];
   } catch(err) {}
   const userContainer = $('.container.management');
   const addUserBox = $('#addUserBox');
   const userList = $('ul#userlist');
   const userField = $('p#user');
   const exportLink = $('a#export');
-  $('span#what').text(localStorage.getItem('what') || 'Champion');
-  let currentUserIndex = new Date().getDate() % users.length;
+  const primaryColorPicker = $('input#primary-color-picker');
+  const secondaryColorPicker = $('input#secondary-color-picker');
+  $('span#what').text(application.what);
+  let currentUserIndex = new Date().getDate() % application.users.length;
 
   function getExportDataString() {
-    return 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify({
-      what: localStorage.getItem('what') || 'Champion',
-      users
-    }));
+    return 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(application));
   }
 
   function setWhat(what) {
     localStorage.setItem('what', what);
+    application.what = what;
     $('span#what').text(what);
+  }
+
+  function updateColors(type, color) {
+    $(`.${type}`).each(function (index, item) {
+      $(item).css('color', color);
+    });
+  }
+
+  function setColors() {
+    for (colorType in application.colors) {
+      updateColors(colorType, application.colors[colorType]);
+      localStorage.setItem(`${colorType}Color`, application.colors[colorType]);
+    }
+    primaryColorPicker[0].value = application.colors.primary;
+    secondaryColorPicker[0].value = application.colors.secondary;
+  }
+
+  function watchPrimaryColorChange(type, event) {
+    application.colors[type] = event.target.value;
+    localStorage.setItem(`${type}Color`, event.target.value);
+    updateColors(type, event.target.value);
   }
 
   function handleFileSelect() {
@@ -44,10 +73,12 @@
         try {
           const imported = JSON.parse(fr.result);
           if (imported.hasOwnProperty('what') && imported.hasOwnProperty('users') && imported.users.length > 0) {
+            application = imported;
+            console.log("###", application.colors);
             setWhat(imported.what);
-            users = imported.users;
-            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('users', JSON.stringify(application.users));
             updateUsersList();
+            setColors();
           }
         } catch(err) {
           console.error(err);
@@ -58,34 +89,34 @@
   }
   window.handleFileSelect = handleFileSelect;
 
-  userField.text(users[currentUserIndex]);
+  userField.text(application.users[currentUserIndex]);
   setInterval(() => {
-    currentUserIndex = new Date().getDate() % users.length;
-    userField.text(users[currentUserIndex]);
+    currentUserIndex = new Date().getDate() % application.users.length;
+    userField.text(application.users[currentUserIndex]);
   }, INTERVAL)
 
   updateUsersList();
 
   function addUser(username) {
-    users.push(username);
-    localStorage.setItem('users', JSON.stringify(users));
+    application.users.push(username);
+    localStorage.setItem('users', JSON.stringify(application.users));
     updateUsersList();
   }
 
   function updateUsersList() {
-    currentUserIndex = new Date().getDate() % users.length;
+    currentUserIndex = new Date().getDate() % application.users.length;
     $(exportLink).attr('href', getExportDataString());
     $(exportLink).attr('download', `export_who-is-it-today.json`);
-    $(userList).html(users.map(user => `<li>${user} <a id='removeUser' href='#delete' data-user='${user}'><i class='material-icons'>clear</i></a></li>`));
-    userField.text(users[currentUserIndex]);
+    $(userList).html(application.users.map(user => `<li>${user} <a id='removeUser' href='#delete' data-user='${user}'><i class='material-icons'>clear</i></a></li>`));
+    userField.text(application.users[currentUserIndex]);
     updateClickListeners();
   }
 
   function removeUser(username) {
-    users = users.filter(user => {
+    application.users = application.users.filter(user => {
       return user !== username;
     });
-    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('users', JSON.stringify(application.users));
     updateUsersList();
   }
 
@@ -147,5 +178,14 @@
       setWhat(subject);
     }
   }
+
+  setColors();
+
+  primaryColorPicker.on('change', (event) => {
+    watchPrimaryColorChange('primary', event);
+  });
+  secondaryColorPicker.on('change', (event) => {
+    watchPrimaryColorChange('secondary', event);
+  });
 
 })(window.jQuery);

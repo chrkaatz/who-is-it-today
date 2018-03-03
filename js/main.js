@@ -16,7 +16,7 @@
   } catch(err) {}
   const userContainer = $('.container.management');
   const addUserBox = $('#addUserBox');
-  const userList = $('ul#userlist');
+  const userList = $('div#userlist');
   const userField = $('p#user');
   const exportLink = $('a#export');
   const primaryColorPicker = $('input#primary-color-picker');
@@ -107,7 +107,14 @@
     currentUserIndex = new Date().getDate() % application.users.length;
     $(exportLink).attr('href', getExportDataString());
     $(exportLink).attr('download', `export_who-is-it-today.json`);
-    $(userList).html(application.users.map(user => `<li>${user} <a id='removeUser' href='#delete' data-user='${user}'><i class='material-icons'>clear</i></a></li>`));
+    $(userList).html(application.users.map(user => `
+      <span class="mdl-chip mdl-chip--deletable">
+          <span class="mdl-chip__text">${user}</span>
+          <button type="button" class="mdl-chip__action" id='removeUser' data-user='${user}'>
+              <i class="material-icons">cancel</i>
+          </button>
+      </span>
+    `));
     userField.text(application.users[currentUserIndex]);
     updateClickListeners();
   }
@@ -147,7 +154,7 @@
   });
 
   function updateClickListeners(){
-    $('a#removeUser').click(event => {
+    $('button#removeUser').click(event => {
         removeUser($(event.currentTarget).data().user);
     });
   }

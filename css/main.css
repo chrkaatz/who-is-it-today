@@ -91,29 +91,6 @@ a:hover {
     color: #ecf0f1;
 }
 
-ul#userlist {
-    list-style: none;
-    margin: 0px;
-    padding: 0px;
-}
-
-ul#userlist li {
-    float: left;
-    background-color: #dedede;
-    margin: 5px 5px 5px 5px;
-    border-radius: 5px;
-    padding: 0px 5px 5px 5px;
-    font-size: 1.2em;
-    line-height: 1;
-}
-
-ul#userlist li a {
-    color: #c0392b;
-    position: relative;
-    bottom: -5px;
-}
-
-
 #addUserBox {
     display: none;
 }

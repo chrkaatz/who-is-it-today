@@ -12,7 +12,7 @@
     }
   };
   try {
-    application.users = JSON.parse(localStorage.getItem('users')) || [];
+    application.users = JSON.parse(localStorage.getItem('users')) || ['Tintin', 'Mickey'];
   } catch(err) {}
   const userContainer = $('.container.management');
   const addUserBox = $('#addUserBox');

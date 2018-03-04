@@ -88,7 +88,6 @@
           const imported = JSON.parse(fr.result);
           if (imported.hasOwnProperty('what') && imported.hasOwnProperty('users') && imported.users.length > 0) {
             application = imported;
-            console.log("###", application.colors);
             setWhat(imported.what);
             localStorage.setItem('users', JSON.stringify(application.users));
             updateUsersList();
@@ -131,7 +130,7 @@
       </span>
     `));
     userField.text(application.users[currentUserIndex]);
-    backupFieldSpan.text(application.users[currentUserIndex+1]);
+    backupFieldSpan.text(application.users.length >= currentUserIndex + 1 ? application.users[currentUserIndex + 1] : application.users[0]);
     updateClickListeners();
   }
 

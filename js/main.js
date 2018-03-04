@@ -1,3 +1,5 @@
+'use strict';
+
 (function($) {
   const INTERVAL = 60 * 60 * 1000;
   const doneTypingInterval = 2000;
@@ -9,7 +11,8 @@
     colors: {
       primary: localStorage.getItem('primaryColor') || '#f39c12',
       secondary: localStorage.getItem('secondaryColor') || '#9b59b6'
-    }
+    },
+    showBackup: localStorage.getItem('showBackup') === 'true' || false
   };
   try {
     application.users = JSON.parse(localStorage.getItem('users')) || ['Tintin', 'Mickey'];
@@ -21,11 +24,18 @@
   const exportLink = $('a#export');
   const primaryColorPicker = $('input#primary-color-picker');
   const secondaryColorPicker = $('input#secondary-color-picker');
+  const backupToggle = $('input#backupInput');
+  const backupField = $('p#backup');
+  const backupFieldSpan = $('p#backup #backupUser');
+  backupToggle.prop("checked", application.showBackup);
+  toggleBackup(application.showBackup);
   $('span#what').text(application.what);
   let currentUserIndex = new Date().getDate() % application.users.length;
 
-  function getExportDataString() {
-    return 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(application));
+  function toggleBackup(show) {
+    application.showBackup = show;
+    localStorage.setItem('showBackup', show);
+    show === true ? backupField.removeClass('hidden') : backupField.addClass('hidden');
   }
 
   function setWhat(what) {
@@ -41,7 +51,7 @@
   }
 
   function setColors() {
-    for (colorType in application.colors) {
+    for (let colorType in application.colors) {
       updateColors(colorType, application.colors[colorType]);
       localStorage.setItem(`${colorType}Color`, application.colors[colorType]);
     }
@@ -53,6 +63,10 @@
     application.colors[type] = event.target.value;
     localStorage.setItem(`${type}Color`, event.target.value);
     updateColors(type, event.target.value);
+  }
+
+  function getExportDataString() {
+    return 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(application));
   }
 
   function handleFileSelect() {
@@ -78,6 +92,7 @@
             setWhat(imported.what);
             localStorage.setItem('users', JSON.stringify(application.users));
             updateUsersList();
+            toggleBackup(application.showBackup);
             setColors();
           }
         } catch(err) {
@@ -116,6 +131,7 @@
       </span>
     `));
     userField.text(application.users[currentUserIndex]);
+    backupFieldSpan.text(application.users[currentUserIndex+1]);
     updateClickListeners();
   }
 
@@ -193,6 +209,10 @@
   });
   secondaryColorPicker.on('change', (event) => {
     watchPrimaryColorChange('secondary', event);
+  });
+
+  backupToggle.on('change', (event) => {
+    toggleBackup(event.target.checked);
   });
 
 })(window.jQuery);

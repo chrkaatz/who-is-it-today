@@ -40,21 +40,25 @@ html {
 
 /* my stuff! */
 
-.container {
-    display: flex;
-    flex-direction: row;
+.container, .container .item {
     justify-content: center;
+    text-align: center;
 }
 
 .container h1 {
-    font-size: 3em;
+    font-size: 5vw;
     color: rgba(250, 130, 49, 1.0);
 }
 
 .container p#user {
-    font-size: 15em;
+    font-size: 20vw;
     line-height: 1;
-    margin: 0.8em;
+    color: rgba(250, 130, 49, 1.0);
+}
+
+.container p#backup {
+    font-size: 2vw;
+    line-height: 1;
     color: rgba(250, 130, 49, 1.0);
 }
 

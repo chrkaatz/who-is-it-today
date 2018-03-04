@@ -9,8 +9,9 @@ For a live demo head over to [https://chrkaatz.github.io/who-is-it-today](https:
 * Stores a list of usernames into a browser's local storage
 * customize the headline which stores it also in the local storage
 * import and export of users-lists as well as the title
+* backup toggle to show the person of tomorrow
+* response layout
 
 ## Current limitations
 
 * Not agnostic to business week days
-* no way to display a back-up person yet

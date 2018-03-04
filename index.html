@@ -27,6 +27,7 @@
                     <span id="what" contenteditable="true">Champion</span>
                 </h1>
                 <p id="user" class="primary"></p>
+                <p id="backup" class="hidden secondary">Backup: <span id='backupUser'></span></p>
             </div>
         </div>
         <div class="demo-card-square mdl-card mdl-shadow--2dp container management">
@@ -34,7 +35,13 @@
                 <h2 class="mdl-card__title-text">Management</h2>
             </div>
             <div class="mdl-card__supporting-text">
+                <h5>Customization</h5>
                 <p>You can also update the main color <input id="primary-color-picker" type="color"> and the secondary color <input id="secondary-color-picker" type="color">.</p>
+                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="backupInput">
+                    <input type="checkbox" id="backupInput" class="mdl-switch__input">
+                    <span class="mdl-switch__label">Show Backup</span>
+                </label>
+                <h5>Users</h5>
                 <div id="userlist"></div>
                 <div class="clearfix"></div>
                 <div id="addUserBox">

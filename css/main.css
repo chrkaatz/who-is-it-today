@@ -66,6 +66,7 @@ html {
     display: none;
     position: absolute;
     height: auto;
+    text-align: left;
     width: 80%;
     margin: 0px 10%;
     bottom: 50px;

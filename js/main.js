@@ -70,7 +70,7 @@
   }
 
   function handleFileSelect() {
-    input = document.getElementById('fileinput');
+    const input = document.getElementById('fileinput');
     if (!input) {
       alert("Um, couldn't find the fileinput element.");
     }
@@ -81,8 +81,8 @@
       alert("Please select a file before clicking 'Load'");
     }
     else {
-      file = input.files[0];
-      fr = new FileReader();
+      const file = input.files[0];
+      const fr = new FileReader();
       fr.onload = function() {
         try {
           const imported = JSON.parse(fr.result);

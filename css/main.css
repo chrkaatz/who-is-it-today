@@ -48,10 +48,11 @@ html {
 .container h1 {
     font-size: 5vw;
     color: rgba(250, 130, 49, 1.0);
+    font-weight: 300;
 }
 
 .container p#user {
-    font-size: 20vw;
+    font-size: 18vw;
     line-height: 1;
     color: rgba(250, 130, 49, 1.0);
 }
@@ -60,6 +61,7 @@ html {
     font-size: 2vw;
     line-height: 1;
     color: rgba(250, 130, 49, 1.0);
+    font-weight: 300;
 }
 
 .container.management {

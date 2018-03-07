@@ -16,17 +16,8 @@ html {
     font-family: 'Roboto', sans-serif;
     line-height: 1.4;
     background-color: #fdfdfd;
+    overflow: hidden;
 }
-
-/*
- * Remove text-shadow in selection highlight:
- * https://twitter.com/miketaylr/status/12228805301
- *
- * Vendor-prefixed and regular ::selection selectors cannot be combined:
- * https://stackoverflow.com/a/16982510/7133471
- *
- * Customize the background color to match your design.
- */
 
 ::-moz-selection {
     background: #b3d4fc;
@@ -81,8 +72,8 @@ html {
     width: 100%;
     bottom: 0px;
     text-align: center;
-    background-color: #45aaf2;
-    border-top: 10px rgba(69, 170, 242, 0.4) solid;
+    background-color: #34495e;
+    border-top: 10px solid #34495e;
 }
 
 .footer a {

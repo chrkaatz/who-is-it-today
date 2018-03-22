@@ -157,7 +157,7 @@
         $(addUserBox).hide();
     }
     $('button#AddUserBtn').click((event) => {
-      if ($('input#name').value !== '' && $('input#name').value > 0) {
+      if ($('input#name')[0].value !== '' && $('input#name')[0].value.length > 0) {
         addUser($('input#name')[0].value);
         $('input#name')[0].value = '';
       }

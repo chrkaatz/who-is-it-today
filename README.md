@@ -1,6 +1,6 @@
 # who-is-it-today
 
-A simple tool to show, who is the chosen person of a day.
+A simple tool to show, who is a chosen person of a day.
 
 For a live demo head over to [https://chrkaatz.github.io/who-is-it-today](https://chrkaatz.github.io/who-is-it-today).
 

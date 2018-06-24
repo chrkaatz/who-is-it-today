@@ -107,6 +107,7 @@
   setInterval(() => {
     currentUserIndex = new Date().getDate() % application.users.length;
     userField.text(application.users[currentUserIndex]);
+    backupFieldSpan.text(application.users[currentUserIndex + 1] || application.users[0]);
   }, INTERVAL)
 
   updateUsersList();

@@ -1,0 +1,22 @@
+{
+  "name": "who-is-it-today",
+  "version": "1.0.0",
+  "description": "A simple tool to show, who is the chosen person of a day.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrkaatz/who-is-it-today.git"
+  },
+  "keywords": [
+    "champion",
+    "cycling"
+  ],
+  "author": "Christian Kaatz <chrkaatz@googlemail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrkaatz/who-is-it-today/issues"
+  },
+  "homepage": "https://github.com/chrkaatz/who-is-it-today#readme"
+}
